@@ -24,9 +24,7 @@
   --ease:cubic-bezier(.16,1,.3,1);
   --fd:'Sora',sans-serif; --fb:'Plus Jakarta Sans',sans-serif; --fm:'JetBrains Mono',monospace;
   --head-h:68px; --mq-h:36px;
-  /* skala tipografi cair — mengikuti lebar layar secara proporsional */
   --fs-h1:clamp(30px,5.4vw,64px);
-  --fs-h2:clamp(22px,3vw,36px);
   --fs-body:clamp(14.5px,1.15vw,16px);
   --fs-small:clamp(13px,1vw,14.5px);
 }
@@ -105,7 +103,7 @@ section{padding-block:clamp(56px,7vw,92px);scroll-margin-top:calc(var(--head-h) 
 
 /* hero */
 .hero{position:relative;display:flex;align-items:center;color:#fff;overflow:hidden;
-  min-height:min(860px,max(560px,calc(100svh - var(--head-h) - var(--mq-h))));
+  min-height:min(880px,max(560px,calc(100svh - var(--head-h) - var(--mq-h))));
   background:linear-gradient(135deg,#12180F,#0A0D0A)}
 .hero-bg{position:absolute;inset:0;z-index:0}
 .hero-bg img{width:100%;height:100%;object-fit:cover}
@@ -113,7 +111,7 @@ section{padding-block:clamp(56px,7vw,92px);scroll-margin-top:calc(var(--head-h) 
   radial-gradient(60% 80% at 88% 20%,rgba(23,184,91,.14),transparent 60%),
   linear-gradient(90deg,rgba(10,13,10,.95) 0%,rgba(10,13,10,.80) 38%,
     rgba(10,13,10,.44) 68%,rgba(10,13,10,.24) 100%),
-  linear-gradient(0deg,rgba(10,13,10,.82) 0%,transparent 42%)}
+  linear-gradient(0deg,rgba(10,13,10,.85) 0%,transparent 46%)}
 .hero .wrap{position:relative;z-index:2;width:100%;padding-block:clamp(48px,7vw,80px)}
 .eyebrow{display:inline-flex;align-items:center;gap:12px;font-family:var(--fm);
   font-weight:500;font-size:clamp(10px,1vw,11.5px);letter-spacing:.26em;text-transform:uppercase;
@@ -125,14 +123,61 @@ h1 em{font-style:normal;color:var(--acc)}
 .hero-sub{margin-top:20px;font-size:clamp(15px,1.7vw,18px);
   color:rgba(255,255,255,.78);max-width:56ch}
 .hero-cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}
-.stats{display:flex;gap:clamp(22px,4.5vw,60px);flex-wrap:wrap;margin-top:clamp(28px,3.5vw,44px);
-  padding-top:24px;border-top:1px solid rgba(255,255,255,.16)}
-.stat b{font-family:var(--fd);font-size:clamp(19px,1.8vw,23px);font-weight:700;display:block;
-  letter-spacing:-.02em;color:#fff;font-variant-numeric:tabular-nums}
-.stat span{font-family:var(--fm);font-size:clamp(9px,.8vw,10px);font-weight:500;letter-spacing:.16em;
-  text-transform:uppercase;color:rgba(255,255,255,.55)}
 
-/* header section — hanya label kecil */
+/* layar lebar: tulisan mulai lebih ke kiri */
+@media(min-width:1280px){
+  .hero .wrap{max-width:1560px}
+}
+
+/* strip video demo di hero */
+.vstrip{margin-top:clamp(28px,3.5vw,44px);padding-top:22px;
+  border-top:1px solid rgba(255,255,255,.16)}
+.vstrip-lab{display:inline-flex;align-items:center;gap:9px;
+  font-family:var(--fm);font-size:10px;font-weight:500;letter-spacing:.22em;
+  text-transform:uppercase;color:rgba(255,255,255,.55);margin-bottom:14px}
+.vstrip-lab i{width:6px;height:6px;background:var(--acc);transform:rotate(45deg)}
+.vrow{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+.vcard{position:relative;border-radius:14px;overflow:hidden;aspect-ratio:16/9;
+  border:1px solid rgba(255,255,255,.14);cursor:pointer;
+  background:#10150F;transition:transform .3s var(--ease),border-color .3s}
+.vcard:hover{transform:translateY(-4px);border-color:rgba(23,184,91,.5)}
+.vcard img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  opacity:.85;transition:opacity .3s,transform .5s var(--ease)}
+.vcard:hover img{opacity:1;transform:scale(1.05)}
+.vcard .vp{position:absolute;top:50%;left:50%;translate:-50% -50%;z-index:2;
+  width:44px;height:44px;border-radius:50%;background:rgba(12,15,13,.7);
+  backdrop-filter:blur(4px);border:1px solid rgba(255,255,255,.4);
+  display:grid;place-items:center;transition:background .25s}
+.vcard .vp::after{content:"";border-style:solid;border-width:8px 0 8px 13px;
+  border-color:transparent transparent transparent #fff;margin-left:3px}
+.vcard:hover .vp{background:var(--acc);border-color:var(--acc)}
+.vcard .vn{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:26px 12px 10px;
+  font-family:var(--fd);font-weight:600;font-size:12.5px;color:#fff;
+  background:linear-gradient(transparent,rgba(0,0,0,.8))}
+@media(max-width:760px){
+  .vrow{grid-template-columns:none;grid-auto-flow:column;
+    grid-auto-columns:74%;overflow-x:auto;padding-bottom:8px;
+    scroll-snap-type:x mandatory;scrollbar-width:none}
+  .vrow::-webkit-scrollbar{display:none}
+  .vcard{scroll-snap-align:start}
+}
+
+/* lightbox pemutar video */
+.lbx{position:fixed;inset:0;z-index:500;display:none;align-items:center;
+  justify-content:center;padding:clamp(14px,3vw,40px);
+  background:rgba(5,8,6,.9);backdrop-filter:blur(6px)}
+.lbx.open{display:flex}
+.lbx-box{position:relative;width:min(960px,100%);aspect-ratio:16/9;
+  background:#000;border-radius:14px;overflow:hidden;
+  box-shadow:0 40px 90px rgba(0,0,0,.6)}
+.lbx-box iframe{width:100%;height:100%;border:0;display:block}
+.lbx-x{position:absolute;top:-46px;right:0;width:38px;height:38px;border-radius:50%;
+  background:rgba(255,255,255,.12);color:#fff;display:grid;place-items:center;
+  font-size:18px;line-height:1;transition:background .2s}
+.lbx-x:hover{background:var(--acc)}
+body.lbx-lock{overflow:hidden}
+
+/* header section — label kecil saja */
 .s-head{margin-bottom:clamp(24px,3.2vw,38px)}
 .s-kicker{display:inline-flex;align-items:center;gap:9px;font-family:var(--fm);
   font-weight:500;font-size:clamp(10.5px,.9vw,11.5px);letter-spacing:.24em;text-transform:uppercase;
@@ -306,13 +351,11 @@ footer{background:var(--dark);color:rgba(255,255,255,.55);font-size:13.5px;
 [data-io].in{opacity:1;transform:none}
 
 /* ============ RESPONSIVE ============ */
-/* Tablet */
 @media (max-width:1024px){
   .apps{grid-template-columns:1fr 1fr}
   .svc-grid,.price-grid,.pf-grid{grid-template-columns:1fr 1fr}
   .price.pop{order:-1}
 }
-/* Mobile besar */
 @media (max-width:900px){
   .nav-toggle{display:grid}
   .nav-links{display:none;position:absolute;top:var(--head-h);left:0;right:0;
@@ -327,7 +370,6 @@ footer{background:var(--dark);color:rgba(255,255,255,.55);font-size:13.5px;
   .qr-side{justify-items:start;text-align:left}
   .f-grid{grid-template-columns:1fr 1fr}
 }
-/* Mobile kecil */
 @media (max-width:640px){
   :root{--head-h:62px;--mq-h:32px}
   .logo .word{font-size:12.5px}
@@ -338,14 +380,11 @@ footer{background:var(--dark);color:rgba(255,255,255,.55);font-size:13.5px;
     linear-gradient(180deg,rgba(10,13,10,.86),rgba(10,13,10,.93)),
     radial-gradient(60% 80% at 88% 20%,rgba(23,184,91,.12),transparent 60%)}
   .hero-cta .btn{width:100%}
-  .stats{gap:18px 26px}
-  .stat{min-width:calc(50% - 26px)}
   .app{flex-direction:row;align-items:flex-start}
   .f-grid{grid-template-columns:1fr;gap:28px}
   .f-bottom{flex-direction:column;gap:6px;text-align:center}
   .wa-fab{width:52px;height:52px}
 }
-/* Layar sangat lebar */
 @media (min-width:1600px){
   .wrap{max-width:1320px}
 }
@@ -413,7 +452,7 @@ footer{background:var(--dark);color:rgba(255,255,255,.55);font-size:13.5px;
 
 <main id="top">
 
-  <!-- HERO -->
+  <!-- HERO + STRIP VIDEO DEMO -->
   <section class="hero">
     <div class="hero-bg" aria-hidden="true">
       <img src="https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?q=80&w=1920&auto=format&fit=crop" alt="" onerror="this.remove()">
@@ -431,11 +470,37 @@ footer{background:var(--dark);color:rgba(255,255,255,.55);font-size:13.5px;
         </a>
         <a class="btn big ghost-w" href="#harga">Lihat Struktur Harga</a>
       </div>
-      <div class="stats" data-io style="--d:.24s">
-        <div class="stat"><b>80+</b><span>Proyek Selesai</span></div>
-        <div class="stat"><b>Google Play</b><span>Aplikasi Terbit Resmi</span></div>
-        <div class="stat"><b>3 Lini</b><span>Layanan Utama</span></div>
-        <div class="stat"><b>Rp 200.000</b><span>Harga Mulai Dari</span></div>
+
+      <div class="vstrip" data-io style="--d:.24s">
+        <p class="vstrip-lab"><i></i>Lihat demo langsung — putar di sini</p>
+        <div class="vrow">
+
+          <!-- ✅ VIDEO 1: Ziee Render Pro (aktif) -->
+          <div class="vcard" data-yt="qi2tzQNKg9Q">
+            <img src="https://i.ytimg.com/vi/qi2tzQNKg9Q/hqdefault.jpg" alt="Demo Ziee Render Pro" loading="lazy">
+            <span class="vp" aria-hidden="true"></span>
+            <span class="vn">Ziee Render Pro · Windows</span>
+          </div>
+
+          <!-- 📹 VIDEO 2: LPTQ NTB — ganti ID_VIDEO_2 (2 tempat) saat video siap -->
+          <!--
+          <div class="vcard" data-yt="ID_VIDEO_2">
+            <img src="https://i.ytimg.com/vi/ID_VIDEO_2/hqdefault.jpg" alt="Demo LPTQ NTB" loading="lazy">
+            <span class="vp" aria-hidden="true"></span>
+            <span class="vn">LPTQ NTB · Android</span>
+          </div>
+          -->
+
+          <!-- 📹 VIDEO 3: Web Download Pro — ganti ID_VIDEO_3 (2 tempat) saat video siap -->
+          <!--
+          <div class="vcard" data-yt="ID_VIDEO_3">
+            <img src="https://i.ytimg.com/vi/ID_VIDEO_3/hqdefault.jpg" alt="Demo Ziee Web Download Pro" loading="lazy">
+            <span class="vp" aria-hidden="true"></span>
+            <span class="vn">Ziee Web Download Pro</span>
+          </div>
+          -->
+
+        </div>
       </div>
     </div>
   </section>
@@ -543,7 +608,7 @@ footer{background:var(--dark);color:rgba(255,255,255,.55);font-size:13.5px;
         </div>
       </div>
       <div class="apps-note" data-io>
-        <span><b>Katalog lengkap tersedia atas permintaan.</b> Kami menyediakan puluhan perangkat lunak lain untuk mendukung kebutuhan content creator.</span>
+        <span><b>Katalog lengkap tersedia atas permintaan.</b> Kami menyediakan puluhan perangkat lunak lain untuk mendukung kebutuhan kreator konten digital.</span>
         <a class="btn sm dark" href="#" data-wa="Halo Ziee Media, saya ingin menerima katalog lengkap aplikasi Ziee Media.">Minta Katalog Lengkap</a>
       </div>
     </div>
@@ -732,11 +797,13 @@ footer{background:var(--dark);color:rgba(255,255,255,.55);font-size:13.5px;
   const $$ = s => [...document.querySelectorAll(s)];
   const WA = '6281907000018';
 
+  /* Sistem tunggal tombol WhatsApp */
   $$('[data-wa]').forEach(el => el.addEventListener('click', e => {
     e.preventDefault();
     window.open(`https://wa.me/${WA}?text=${encodeURIComponent(el.dataset.wa)}`, '_blank');
   }));
 
+  /* Menu mobile */
   const nav = $('#nav'), tog = $('#navToggle');
   tog.addEventListener('click', () => {
     const open = nav.classList.toggle('open');
@@ -744,6 +811,7 @@ footer{background:var(--dark);color:rgba(255,255,255,.55);font-size:13.5px;
   });
   $$('#navLinks a').forEach(a => a.addEventListener('click', () => nav.classList.remove('open')));
 
+  /* Bayangan header + progress bar saat scroll */
   const prog = $('#progress');
   addEventListener('scroll', () => {
     nav.classList.toggle('scrolled', scrollY > 10);
@@ -751,9 +819,32 @@ footer{background:var(--dark);color:rgba(255,255,255,.55);font-size:13.5px;
     prog.style.width = (h.scrollTop / (h.scrollHeight - h.clientHeight) * 100) + '%';
   }, { passive: true });
 
+  /* Marquee: duplikasi agar loop mulus */
   const tk = $('#mqTrack');
   for (let i = 0; i < 3; i++) tk.appendChild(tk.firstElementChild.cloneNode(true));
 
+  /* Lightbox video demo — putar di dalam website */
+  const lbx = document.createElement('div');
+  lbx.className = 'lbx';
+  lbx.innerHTML = '<div class="lbx-box"><button class="lbx-x" aria-label="Tutup video">✕</button></div>';
+  document.body.appendChild(lbx);
+  const lbxBox = lbx.querySelector('.lbx-box'), lbxX = lbx.querySelector('.lbx-x');
+  const closeLbx = () => {
+    lbx.classList.remove('open'); document.body.classList.remove('lbx-lock');
+    lbxBox.querySelectorAll('iframe').forEach(f => f.remove());
+  };
+  $$('.vcard').forEach(c => c.addEventListener('click', () => {
+    const f = document.createElement('iframe');
+    f.src = `https://www.youtube.com/embed/${c.dataset.yt}?autoplay=1&rel=0`;
+    f.allow = 'autoplay; encrypted-media; fullscreen'; f.allowFullscreen = true;
+    lbxBox.appendChild(f);
+    lbx.classList.add('open'); document.body.classList.add('lbx-lock');
+  }));
+  lbxX.addEventListener('click', closeLbx);
+  lbx.addEventListener('click', e => { if (e.target === lbx) closeLbx(); });
+  addEventListener('keydown', e => { if (e.key === 'Escape') closeLbx(); });
+
+  /* Animasi masuk saat discroll */
   const io = new IntersectionObserver(es => es.forEach(en => {
     if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
   }), { threshold: .12, rootMargin: '0px 0px -5% 0px' });
