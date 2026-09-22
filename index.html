@@ -24,7 +24,7 @@
   --ease:cubic-bezier(.16,1,.3,1);
   --fd:'Sora',sans-serif; --fb:'Plus Jakarta Sans',sans-serif; --fm:'JetBrains Mono',monospace;
   --head-h:68px; --mq-h:36px;
-  --fs-h1:clamp(30px,5.4vw,64px);
+  --fs-h1:clamp(30px,4.2vw,54px);
   --fs-body:clamp(14.5px,1.15vw,16px);
   --fs-small:clamp(13px,1vw,14.5px);
 }
@@ -51,7 +51,7 @@ section{padding-block:clamp(56px,7vw,92px);scroll-margin-top:calc(var(--head-h) 
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
 #progress{position:fixed;top:0;left:0;height:2px;width:0;background:var(--acc);z-index:400}
 
-/* logo */
+/* logo dasar */
 .logo{display:inline-flex;align-items:center;gap:10px}
 .logo .mark{width:34px;height:34px;border-radius:9px;background:var(--dark);
   display:grid;place-items:center;flex:none}
@@ -60,7 +60,7 @@ section{padding-block:clamp(56px,7vw,92px);scroll-margin-top:calc(var(--head-h) 
   letter-spacing:.05em;text-transform:uppercase;line-height:1}
 .logo .word i{font-style:normal;color:var(--acc)}
 
-/* header */
+/* header — hanya menu + WhatsApp */
 .top{position:fixed;top:0;left:0;right:0;z-index:100}
 .nav{height:var(--head-h);background:rgba(247,246,242,.88);
   backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
@@ -102,8 +102,7 @@ section{padding-block:clamp(56px,7vw,92px);scroll-margin-top:calc(var(--head-h) 
 .mq-g i{width:5px;height:5px;background:var(--acc);flex:none;transform:rotate(45deg)}
 
 /* hero */
-.hero{position:relative;display:flex;align-items:center;color:#fff;overflow:hidden;
-  min-height:min(880px,max(560px,calc(100svh - var(--head-h) - var(--mq-h))));
+.hero{position:relative;display:flex;color:#fff;overflow:hidden;
   background:linear-gradient(135deg,#12180F,#0A0D0A)}
 .hero-bg{position:absolute;inset:0;z-index:0}
 .hero-bg img{width:100%;height:100%;object-fit:cover}
@@ -112,17 +111,32 @@ section{padding-block:clamp(56px,7vw,92px);scroll-margin-top:calc(var(--head-h) 
   linear-gradient(90deg,rgba(10,13,10,.95) 0%,rgba(10,13,10,.80) 38%,
     rgba(10,13,10,.44) 68%,rgba(10,13,10,.24) 100%),
   linear-gradient(0deg,rgba(10,13,10,.85) 0%,transparent 46%)}
-.hero .wrap{position:relative;z-index:2;width:100%;padding-block:clamp(48px,7vw,80px)}
-.eyebrow{display:inline-flex;align-items:center;gap:12px;font-family:var(--fm);
-  font-weight:500;font-size:clamp(10px,1vw,11.5px);letter-spacing:.26em;text-transform:uppercase;
-  color:rgba(255,255,255,.72);margin-bottom:22px}
-.eyebrow::before{content:"";width:26px;height:1.5px;background:var(--acc)}
+.hero .wrap{position:relative;z-index:2;width:100%;
+  padding-block:clamp(30px,4vw,48px) clamp(36px,4.5vw,56px)}
+
+/* BRANDING BESAR di atas hero */
+.hero-brand{margin-bottom:clamp(20px,2.4vw,30px)}
+.brand-row{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.hero-brand .logo{gap:14px}
+.hero-brand .logo .mark{width:54px;height:54px;border-radius:14px;background:#fff;
+  box-shadow:0 10px 26px rgba(0,0,0,.35)}
+.hero-brand .logo .mark svg{width:26px;height:26px;stroke:var(--dark)}
+.hero-brand .logo .word{font-size:clamp(22px,2.2vw,30px);color:#fff;letter-spacing:.04em}
+.brand-tag{font-family:var(--fm);font-size:clamp(10px,.9vw,11.5px);font-weight:500;
+  letter-spacing:.26em;text-transform:uppercase;color:rgba(255,255,255,.6);
+  border:1px solid rgba(255,255,255,.22);border-radius:999px;padding:8px 14px;line-height:1}
+@media(max-width:640px){
+  .hero-brand .logo .mark{width:44px;height:44px;border-radius:12px}
+  .hero-brand .logo .mark svg{width:21px;height:21px}
+  .hero-brand .logo .word{font-size:20px}
+  .brand-row{gap:12px}
+}
+
 h1{font-family:var(--fd);font-size:var(--fs-h1);line-height:1.1;
   font-weight:800;letter-spacing:-.035em;color:#fff;text-wrap:balance}
 h1 em{font-style:normal;color:var(--acc)}
-.hero-sub{margin-top:20px;font-size:clamp(15px,1.7vw,18px);
-  color:rgba(255,255,255,.78);max-width:56ch}
-.hero-cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}
+.hero-sub{margin-top:14px;font-size:clamp(14.5px,1.4vw,16.5px);
+  color:rgba(255,255,255,.78);max-width:52ch}
 
 /* layar lebar: tulisan mulai lebih ke kiri */
 @media(min-width:1280px){
@@ -130,7 +144,7 @@ h1 em{font-style:normal;color:var(--acc)}
 }
 
 /* strip video demo di hero */
-.vstrip{margin-top:clamp(28px,3.5vw,44px);padding-top:22px;
+.vstrip{margin-top:clamp(20px,2.6vw,32px);padding-top:16px;
   border-top:1px solid rgba(255,255,255,.16)}
 .vstrip-lab{display:inline-flex;align-items:center;gap:9px;
   font-family:var(--fm);font-size:10px;font-weight:500;letter-spacing:.22em;
@@ -375,11 +389,7 @@ footer{background:var(--dark);color:rgba(255,255,255,.55);font-size:13.5px;
   .logo .word{font-size:12.5px}
   .nav .btn.sm{display:none}
   .svc-grid,.price-grid,.pf-grid,.apps,.steps{grid-template-columns:1fr}
-  .hero{min-height:560px}
-  .hero-overlay{background:
-    linear-gradient(180deg,rgba(10,13,10,.86),rgba(10,13,10,.93)),
-    radial-gradient(60% 80% at 88% 20%,rgba(23,184,91,.12),transparent 60%)}
-  .hero-cta .btn{width:100%}
+  .hero .wrap{padding-block:22px 36px}
   .app{flex-direction:row;align-items:flex-start}
   .f-grid{grid-template-columns:1fr;gap:28px}
   .f-bottom{flex-direction:column;gap:6px;text-align:center}
@@ -392,16 +402,6 @@ footer{background:var(--dark);color:rgba(255,255,255,.55);font-size:13.5px;
   html{scroll-behavior:auto}
   *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
   [data-io]{opacity:1;transform:none}
-}
-/* === PERAPIAN HERO: NAIKKAN KONTEN AGAR PAS SAAT DIBUKA === */
-@media(min-width:1024px){
-  .hero .wrap{padding-top:18px!important;padding-bottom:28px!important}
-  h1{font-size:clamp(30px,4vw,52px)!important;line-height:1.08!important}
-  .hero-sub{margin-top:14px!important;font-size:clamp(14.5px,1.3vw,16.5px)!important;max-width:50ch!important}
-  .hero-cta{margin-top:20px!important}
-  .eyebrow{margin-bottom:16px!important}
-  .vstrip{margin-top:18px!important;padding-top:14px!important}
-  .vcard{max-width:380px}
 }
 </style>
 </head>
@@ -427,10 +427,6 @@ footer{background:var(--dark);color:rgba(255,255,255,.55);font-size:13.5px;
 <div class="top">
   <header class="nav" id="nav">
     <div class="wrap">
-      <a class="logo" href="#top" aria-label="Ziee Media">
-        <span class="mark"><svg viewBox="0 0 24 24"><path d="M5 5h14L5 19h14"/></svg></span>
-        <span class="word">Ziee<i>Media</i></span>
-      </a>
       <nav class="nav-links" id="navLinks">
         <a href="#layanan">Layanan</a>
         <a href="#aplikasi">Produk</a>
@@ -462,26 +458,31 @@ footer{background:var(--dark);color:rgba(255,255,255,.55);font-size:13.5px;
 
 <main id="top">
 
-  <!-- HERO + STRIP VIDEO DEMO -->
+  <!-- HERO: branding besar di atas, fokus video -->
   <section class="hero">
     <div class="hero-bg" aria-hidden="true">
       <img src="https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?q=80&w=1920&auto=format&fit=crop" alt="" onerror="this.remove()">
     </div>
     <div class="hero-overlay" aria-hidden="true"></div>
     <div class="wrap">
-      <p class="eyebrow" data-io>Ziee Media · Studio Digital</p>
+
+      <!-- BRANDING BESAR — posisi paling atas hero -->
+      <div class="hero-brand" data-io>
+        <div class="brand-row">
+          <a class="logo" href="#top" aria-label="Ziee Media">
+            <span class="mark"><svg viewBox="0 0 24 24"><path d="M5 5h14L5 19h14"/></svg></span>
+            <span class="word">Ziee<i>Media</i></span>
+          </a>
+          <span class="brand-tag">Studio Digital</span>
+        </div>
+      </div>
+
       <h1 data-io style="--d:.06s">Solusi konten video dan audio terbaik,<br><em>dengan sistem yang mudah bagi kreator konten digital.</em></h1>
       <p class="hero-sub" data-io style="--d:.12s">Produksi video, audio, website, dan aplikasi ditangani dalam satu
         alur kerja yang terstruktur. Anda cukup menyampaikan kebutuhan,
         kami yang mengurus sisanya hingga siap tayang.</p>
-      <div class="hero-cta" data-io style="--d:.18s">
-        <a class="btn big" href="#" data-wa="Halo Ziee Media, saya ingin mendiskusikan sebuah proyek.">
-          Konsultasi Gratis <svg class="ic"><use href="#i-arr"/></svg>
-        </a>
-        <a class="btn big ghost-w" href="#harga">Lihat Struktur Harga</a>
-      </div>
 
-      <div class="vstrip" data-io style="--d:.24s">
+      <div class="vstrip" data-io style="--d:.18s">
         <p class="vstrip-lab"><i></i>Lihat demo langsung — putar di sini</p>
         <div class="vrow">
 
