@@ -393,9 +393,16 @@ footer{background:var(--dark);color:rgba(255,255,255,.55);font-size:13.5px;
   *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
   [data-io]{opacity:1;transform:none}
 }
-  /* === PERBAIKAN JARAK HERO === */
-.hero{min-height:0!important;align-items:flex-start!important}
-.hero .wrap{padding-top:28px!important;padding-bottom:48px!important}
+/* === PERAPIAN HERO: NAIKKAN KONTEN AGAR PAS SAAT DIBUKA === */
+@media(min-width:1024px){
+  .hero .wrap{padding-top:18px!important;padding-bottom:28px!important}
+  h1{font-size:clamp(30px,4vw,52px)!important;line-height:1.08!important}
+  .hero-sub{margin-top:14px!important;font-size:clamp(14.5px,1.3vw,16.5px)!important;max-width:50ch!important}
+  .hero-cta{margin-top:20px!important}
+  .eyebrow{margin-bottom:16px!important}
+  .vstrip{margin-top:18px!important;padding-top:14px!important}
+  .vcard{max-width:380px}
+}
 </style>
 </head>
 <body>
