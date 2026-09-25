@@ -280,7 +280,6 @@ body.lbx-lock{overflow:hidden}
 .pf-cap b{font-family:var(--fd);font-weight:600;font-size:14px;letter-spacing:-.01em}
 .pf-cap small{display:block;font-family:var(--fm);font-weight:500;font-size:9.5px;opacity:.72;letter-spacing:.18em;text-transform:uppercase;margin-top:2px}
 
-/* kontak — minimalis: judul + tombol WA + QRIS */
 #kontak{padding-bottom:clamp(28px,4vw,48px)}
 .cta{background:var(--dark);color:#fff;border-radius:clamp(20px,3vw,28px);padding:clamp(28px,4.5vw,52px) clamp(20px,4.5vw,56px)}
 .cta-grid{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:clamp(24px,5vw,72px);align-items:center}
@@ -297,8 +296,9 @@ body.lbx-lock{overflow:hidden}
   color:rgba(255,255,255,.55);max-width:180px;line-height:1.7}
 
 footer{background:var(--dark);color:rgba(255,255,255,.55);font-size:13.5px;border-top:1px solid var(--line-d)}
-.f-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:clamp(26px,5vw,64px);padding-block:clamp(34px,4.5vw,52px) 32px}
-.f-brand p{margin-top:14px;max-width:36ch;line-height:1.7}
+.f-top{padding-block:clamp(34px,4.5vw,52px) 30px}
+.f-brand{max-width:520px}
+.f-brand p{margin-top:14px;line-height:1.7}
 .f-brand .logo .mark{background:#fff}
 .f-brand .logo .mark svg{stroke:var(--dark)}
 .f-brand .logo .word{color:#fff}
@@ -309,18 +309,12 @@ footer{background:var(--dark);color:rgba(255,255,255,.55);font-size:13.5px;borde
 @keyframes blink{50%{opacity:.3}}
 .f-h{font-family:var(--fm);font-size:10.5px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;
   color:rgba(255,255,255,.4);margin-bottom:12px}
-.f-col a{display:block;padding:5px 0;color:rgba(255,255,255,.65);transition:color .2s}
-.f-col a:hover{color:#fff}
-
-/* baris sosial media horizontal — satu tempat resmi */
-.f-soc{padding-bottom:clamp(26px,3.5vw,40px)}
 .f-soc-row{display:flex;gap:10px;flex-wrap:wrap}
 .f-soc-row a{display:inline-flex;align-items:center;gap:9px;border:1px solid var(--line-d);
   border-radius:999px;padding:10px 18px;font-size:13.5px;font-weight:600;color:rgba(255,255,255,.75);
   transition:background .25s,border-color .25s,color .25s}
 .f-soc-row a:hover{background:rgba(23,184,91,.12);border-color:rgba(23,184,91,.45);color:#fff}
 .f-soc-row .ic{width:15px;height:15px;color:var(--acc)}
-
 .f-bottom{border-top:1px solid var(--line-d);padding-block:18px 26px;display:flex;justify-content:space-between;
   gap:12px;flex-wrap:wrap;font-family:var(--fm);font-size:11px;letter-spacing:.06em;color:rgba(255,255,255,.4)}
 .wa-fab{position:fixed;right:clamp(14px,2.5vw,24px);bottom:clamp(14px,2.5vw,24px);z-index:90;
@@ -348,7 +342,6 @@ footer{background:var(--dark);color:rgba(255,255,255,.55);font-size:13.5px;borde
   .steps{grid-template-columns:1fr 1fr}
   .cta-grid{grid-template-columns:1fr;gap:28px}
   .qr-side{justify-items:start;text-align:left}
-  .f-grid{grid-template-columns:1fr 1fr}
 }
 @media (max-width:640px){
   :root{--head-h:62px;--mq-h:32px}
@@ -361,7 +354,6 @@ footer{background:var(--dark);color:rgba(255,255,255,.55);font-size:13.5px;borde
   .hero-brand .logo .word{font-size:20px}
   .brand-row{gap:12px}
   .app{flex-direction:row;align-items:flex-start}
-  .f-grid{grid-template-columns:1fr;gap:28px}
   .f-bottom{flex-direction:column;gap:6px;text-align:center}
   .wa-fab{width:52px;height:52px}
 }
@@ -654,7 +646,6 @@ footer{background:var(--dark);color:rgba(255,255,255,.55);font-size:13.5px;borde
     </div>
   </section>
 
-  <!-- PROSES — dipindah ke bagian bawah -->
   <section id="proses" class="sec-alt">
     <div class="wrap">
       <div class="s-head" data-io><p class="s-kicker">Proses</p></div>
@@ -667,7 +658,6 @@ footer{background:var(--dark);color:rgba(255,255,255,.55);font-size:13.5px;borde
     </div>
   </section>
 
-  <!-- KONTAK — minimalis -->
   <section id="kontak">
     <div class="wrap">
       <div class="cta" data-io>
@@ -695,7 +685,7 @@ footer{background:var(--dark);color:rgba(255,255,255,.55);font-size:13.5px;borde
 </main>
 
 <footer>
-  <div class="wrap f-grid">
+  <div class="wrap f-top">
     <div class="f-brand">
       <a class="logo" href="#top">
         <span class="mark"><svg viewBox="0 0 24 24"><path d="M5 5h14L5 19h14"/></svg></span>
@@ -703,14 +693,6 @@ footer{background:var(--dark);color:rgba(255,255,255,.55);font-size:13.5px;borde
       </a>
       <p>Studio digital yang melayani pengembangan website, aplikasi, produksi audio, dan siaran langsung dengan standar pengerjaan yang konsisten.</p>
       <span class="f-status"><i></i>Menerima Proyek Baru</span>
-    </div>
-    <div class="f-col">
-      <p class="f-h">Navigasi</p>
-      <a href="#layanan">Layanan</a>
-      <a href="#aplikasi">Produk Digital</a>
-      <a href="#harga">Struktur Harga</a>
-      <a href="#portofolio">Portofolio</a>
-      <a href="#proses">Proses Kerja</a>
     </div>
   </div>
   <div class="wrap f-soc">
@@ -750,12 +732,10 @@ footer{background:var(--dark);color:rgba(255,255,255,.55);font-size:13.5px;borde
     }
     if(D.waTampil){
       $$('[data-txt="waTampil"]').forEach(e => e.textContent = D.waTampil);
-      $$('.f-soc-row a[data-fw="wa"]').forEach(a => {
-        a.href = `https://wa.me/${WA}`;
-      });
+      $$('.f-soc-row a[data-fw="wa"]').forEach(a => a.href = `https://wa.me/${WA}`);
     }
     if(D.email){
-      $$('.f-soc-row a[data-fw="email"]').forEach(a => { a.href = 'mailto:' + D.email; });
+      $$('.f-soc-row a[data-fw="email"]').forEach(a => a.href = 'mailto:' + D.email);
     }
     if(D.ig){
       $$('.f-soc-row a[data-fw="ig"]').forEach(a => a.href = 'https://www.instagram.com/' + D.ig.replace('@',''));
