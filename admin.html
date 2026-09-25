@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — Ziee Media</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2317B85B'/%3E%3Cpath d='M20 20h24L24 44h20' stroke='white' stroke-width='7' fill='none' stroke-linecap='square'/%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0C0F0D;--panel:#12161360;--card:#141915;--line:rgba(255,255,255,.1);
+  --acc:#17B85B;--txt:#EAF4EC;--mut:#8AA391;--red:#FF4D57;
+  --fd:'Sora',sans-serif;--fb:'Plus Jakarta Sans',sans-serif;--fm:'JetBrains Mono',monospace}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--txt);font-family:var(--fb);font-size:14.5px;line-height:1.6;min-height:100vh;padding:24px}
+h1{font-family:var(--fd);font-size:22px;margin-bottom:4px}
+h1 b{color:var(--acc)}
+.sub{color:var(--mut);font-size:13px;margin-bottom:24px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px;margin-bottom:16px}
+.card h2{font-family:var(--fd);font-size:15px;margin-bottom:14px;color:var(--acc);letter-spacing:.04em}
+label{display:block;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--mut);margin:10px 0 5px}
+input,textarea{width:100%;background:#0A0D0B;border:1px solid var(--line);border-radius:10px;
+  color:var(--txt);font:inherit;font-size:14px;padding:10px 12px}
+input:focus,textarea:focus{outline:1px solid var(--acc)}
+textarea{min-height:80px;resize:vertical}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+@media(max-width:720px){.grid2,.grid3{grid-template-columns:1fr}}
+.foto-row{display:flex;gap:14px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
+.foto-row:last-child{border-bottom:0}
+.foto-prev{width:92px;height:60px;border-radius:8px;object-fit:cover;background:#0A0D0B;flex:none;border:1px solid var(--line)}
+.foto-row .fl{flex:1;min-width:0}
+.foto-row .fn{font-family:var(--fm);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--mut);margin-bottom:6px}
+.filebtn{display:inline-block;background:#0A0D0B;border:1px dashed var(--line);border-radius:8px;
+  padding:7px 14px;font-size:12px;cursor:pointer;color:var(--mut);transition:border-color .2s,color .2s}
+.filebtn:hover{border-color:var(--acc);color:var(--acc)}
+.filebtn input{display:none}
+.bar{position:sticky;bottom:0;background:rgba(12,15,13,.92);backdrop-filter:blur(10px);
+  border:1px solid var(--line);border-radius:14px;padding:14px 16px;display:flex;gap:10px;
+  align-items:center;flex-wrap:wrap;z-index:10}
+.btn{background:var(--acc);color:#04130A;border:0;border-radius:999px;padding:12px 22px;
+  font-weight:700;font-size:13.5px;cursor:pointer;font-family:var(--fb);letter-spacing:.02em}
+.btn:hover{filter:brightness(1.1)}
+.btn.ghost{background:transparent;color:var(--mut);border:1px solid var(--line)}
+.btn.ghost:hover{color:var(--txt)}
+.hint{font-size:12px;color:var(--mut);flex:1;min-width:200px}
+.gate{max-width:380px;margin:12vh auto;text-align:center}
+.gate input{text-align:center;font-size:16px;margin:14px 0}
+.msg{color:var(--red);font-size:13px;min-height:18px}
+.ok{color:var(--acc)}
+.vrow{display:grid;grid-template-columns:1fr 2fr 40px;gap:10px;align-items:center;margin-bottom:8px}
+.vrow input{padding:9px 12px}
+.del{background:none;border:1px solid var(--line);border-radius:8px;color:var(--red);
+  width:38px;height:38px;cursor:pointer;font-size:15px}
+.del:hover{border-color:var(--red)}
+.add{background:none;border:1px dashed var(--line);border-radius:10px;color:var(--mut);
+  width:100%;padding:10px;cursor:pointer;font-size:13px;margin-top:6px}
+.add:hover{border-color:var(--acc);color:var(--acc)}
+.note{font-size:12px;color:var(--mut);background:#0A0D0B;border-radius:10px;padding:12px 14px;margin-top:10px;line-height:1.7}
+.note b{color:var(--txt)}
+</style>
+</head>
+<body>
+
+<!-- GERBANG PASSWORD -->
+<div class="gate" id="gate">
+  <h1>Admin <b>Ziee Media</b></h1>
+  <p class="sub">Panel kontrol konten website</p>
+  <input type="password" id="passIn" placeholder="Masukkan password admin" autocomplete="current-password">
+  <p class="msg" id="gateMsg"></p>
+  <button class="btn" style="width:100%" onclick="tryGate()">Masuk Panel</button>
+</div>
+
+<!-- PANEL -->
+<div id="panel" style="display:none;max-width:900px;margin-inline:auto">
+
+  <h1>Admin <b>Ziee Media</b></h1>
+  <p class="sub">Ubah konten → unduh <code style="color:var(--acc)">site-data.js</code> → upload ke GitHub (Add file → Upload files → Commit). Website berubah otomatis.</p>
+
+  <div class="card">
+    <h2>▣ Kontak</h2>
+    <div class="grid2">
+      <div><label>Nomor WhatsApp (format 62…)</label><input id="wa" placeholder="6281907000018"></div>
+      <div><label>Nomor yang ditampilkan</label><input id="waTampil" placeholder="0819-0700-0018"></div>
+      <div><label>Email</label><input id="email" placeholder="zieerahman74@gmail.com"></div>
+      <div><label>Instagram (dengan @)</label><input id="ig" placeholder="@ziee_media"></div>
+      <div><label>TikTok (dengan @)</label><input id="tt" placeholder="@ziee_media"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>▣ Teks Hero</h2>
+    <label>Judul baris 1 (putih)</label><input id="h1a">
+    <label>Judul baris 2 (hijau)</label><input id="h1b">
+    <label>Sub-judul</label><textarea id="sub"></textarea>
+  </div>
+
+  <div class="card">
+    <h2>▣ Video Demo (YouTube — ID dari link, contoh: qi2tzQNKg9Q)</h2>
+    <div id="vList"></div>
+    <button class="add" onclick="addVideo('','')">+ Tambah Video</button>
+  </div>
+
+  <div class="card">
+    <h2>▣ Paket Harga (3 paket)</h2>
+    <div id="pkgList"></div>
+  </div>
+
+  <div class="card">
+    <h2>▣ Foto — klik untuk ganti (otomatis dikompres)</h2>
+    <div id="fotoList"></div>
+    <div class="note">Foto disimpan <b>di dalam file site-data.js</b> (sudah dikompres otomatis), jadi Anda hanya perlu upload <b>satu file</b> itu ke GitHub. Slot tanpa foto = foto bawaan dipakai.</div>
+  </div>
+
+  <div class="bar">
+    <button class="btn" onclick="unduh()">⬇ Unduh site-data.js</button>
+    <button class="btn ghost" onclick="location.reload()">Muat Ulang</button>
+    <span class="hint">Setelah unduh: GitHub → Add file → Upload files → pilih <b>site-data.js</b> → Commit changes. Selesai!</span>
+  </div>
+</div>
+
+<!-- Data saat ini (jika sudah pernah dibuat) -->
+<script src="site-data.js"></script>
+
+<script>
+/* ===== GANTI PASSWORD INI SESUAI KEINGINAN ANDA ===== */
+const PASS = 'ziee2025';
+
+const DEF = {
+  wa:'6281907000018', waTampil:'0819-0700-0018', email:'zieerahman74@gmail.com', ig:'@ziee_media', tt:'@ziee_media',
+  hero:{ h1a:'Solusi konten video dan audio terbaik,',
+         h1b:'dengan sistem yang mudah bagi kreator konten digital.',
+         sub:'Produksi video, audio, website, dan aplikasi ditangani dalam satu alur kerja yang terstruktur. Anda cukup menyampaikan kebutuhan, kami yang mengurus sisanya hingga siap tayang.' },
+  videos:[
+    {id:'qi2tzQNKg9Q', nama:'Ziee Render Pro · Windows'},
+    {id:'a30aLDytEBg', nama:'Ziee Murottal · Windows'}
+  ],
+  paket:[
+    {nama:'Starter', harga:'Rp 200.000', dp:'Rp 100.000', pop:false,
+     desc:'Untuk kebutuhan dasar atau percobaan pertama.',
+     fitur:['Satu unit layanan: halaman web, sesi perekaman, atau siaran langsung','Satu kali revisi','Estimasi pengerjaan 2 sampai 3 hari kerja']},
+    {nama:'Standard', harga:'Rp 350.000', dp:'Rp 175.000', pop:true,
+     desc:'Untuk kebutuhan bisnis yang telah berjalan.',
+     fitur:['Situs web dengan katalog, satu episode podcast lengkap, atau siaran langsung dua jam','Dua kali revisi','Garansi perbaikan tujuh hari']},
+    {nama:'Pro', harga:'Rp 500.000', dp:'Rp 250.000', pop:false,
+     desc:'Untuk hasil optimal dengan prioritas pengerjaan.',
+     fitur:['Situs web dua sampai tiga halaman, dua episode produksi, atau siaran dengan video sorotan','Tiga kali revisi','Prioritas antrian pengerjaan']}
+  ],
+  foto:{}
+};
+
+let DATA = JSON.parse(JSON.stringify(DEF));
+if (window.SITE_DATA) DATA = deepMerge(DEF, window.SITE_DATA);
+function deepMerge(a,b){ const o=JSON.parse(JSON.stringify(a));
+  for(const k in b){ if(b[k] && typeof b[k]==='object' && !Array.isArray(b[k])) o[k]=deepMerge(o[k]||{},b[k]); else o[k]=b[k]; } return o; }
+
+function tryGate(){
+  if($('#passIn').value === PASS){
+    sessionStorage.setItem('zm_admin','1');
+    showPanel();
+  } else { $('#gateMsg').textContent = 'Password salah.'; }
+}
+function showPanel(){
+  $('#gate').style.display='none'; $('#panel').style.display='block';
+  isiForm();
+}
+const $ = s => document.querySelector(s);
+
+/* ambil draft tersimpan di browser (biar tidak hilang saat refresh) */
+if(sessionStorage.getItem('zm_admin')==='1'){ document.addEventListener('DOMContentLoaded',showPanel); }
+ $('#gate').addEventListener('keydown', e => { if(e.key==='Enter') tryGate(); });
+
+function isiForm(){
+  $('#wa').value=DATA.wa; $('#waTampil').value=DATA.waTampil;
+  $('#email').value=DATA.email; $('#ig').value=DATA.ig; $('#tt').value=DATA.tt;
+  $('#h1a').value=DATA.hero.h1a; $('#h1b').value=DATA.hero.h1b; $('#sub').value=DATA.hero.sub;
+  $('#vList').innerHTML=''; DATA.videos.forEach(v=>addVideo(v.id,v.nama));
+  DATA.paket.forEach((p,i)=>tampilPaket(i,p));
+  tampilFoto();
+}
+
+/* ===== VIDEO ===== */
+function addVideo(id,nama){
+  const row=document.createElement('div'); row.className='vrow';
+  row.innerHTML=`<input placeholder="ID video" value="${id||''}">
+    <input placeholder="Nama tampilan" value="${nama||''}">
+    <button class="del" onclick="this.parentElement.remove()">✕</button>`;
+  $('#vList').appendChild(row);
+}
+
+/* ===== PAKET ===== */
+function tampilPaket(i,p){
+  const d=document.createElement('div');
+  d.className='card'; d.style.background='#0A0D0B'; d.dataset.i=i;
+  d.innerHTML=`
+    <div class="grid2">
+      <div><label>Nama paket</label><input class="p-nama" value="${p.nama}"></div>
+      <div><label>Harga tampil</label><input class="p-harga" value="${p.harga}"></div>
+      <div><label>Uang muka (angka saja, mis: Rp 100.000)</label><input class="p-dp" value="${p.dp}"></div>
+      <div><label>Jadikan paling populer?</label>
+        <select class="p-pop"><option value="no"${p.pop?'':' selected'}>Tidak</option><option value="yes"${p.pop?' selected':''}>Ya</option></select></div>
+    </div>
+    <label>Deskripsi singkat</label><input class="p-desc" value="${p.desc}">
+    <label>Fitur (satu per baris)</label><textarea class="p-fitur">${p.fitur.join('\n')}</textarea>`;
+  $('#pkgList').appendChild(d);
+}
+
+/* ===== FOTO ===== */
+const FOTO = [
+  ['hero','Latar hero (belakang judul)'],
+  ['svc1','Layanan 1 — Website & Aplikasi'],
+  ['svc2','Layanan 2 — Produksi Audio'],
+  ['svc3','Layanan 3 — Siaran Langsung'],
+  ['pf1','Portofolio 1 — Toko Digital'],
+  ['pf2','Portofolio 2 — LPTQ NTB'],
+  ['pf3','Portofolio 3 — Produksi Podcast'],
+  ['pf4','Portofolio 4 — Siaran Langsung'],
+  ['pf5','Portofolio 5 — Ziee Render Pro'],
+  ['pf6','Portofolio 6 — Web Download Pro'],
+  ['qris','QRIS pembayaran'],
+];
+function tampilFoto(){
+  $('#fotoList').innerHTML = FOTO.map(([k,lab])=>`
+    <div class="foto-row">
+      <img class="foto-prev" id="pv-${k}" src="${DATA.foto[k]||''}" onerror="this.style.visibility='hidden'">
+      <div class="fl">
+        <div class="fn">${lab}</div>
+        <label class="filebtn">Pilih foto<input type="file" accept="image/*" onchange="pickFoto('${k}',this)"></label>
+        <span id="st-${k}" style="font-size:11px;color:var(--mut);margin-left:10px"></span>
+      </div>
+    </div>`).join('');
+}
+function pickFoto(k,input){
+  const f=input.files[0]; if(!f) return;
+  const maxW = k==='qris' ? 600 : (k==='hero' ? 1600 : 1000);
+  compress(f,maxW,k==='qris', url=>{
+    DATA.foto[k]=url;
+    const pv=$('#pv-'+k); pv.src=url; pv.style.visibility='visible';
+    $('#st-'+k).textContent='✓ siap ('+Math.round(url.length/1024)+' KB)';
+  });
+}
+function compress(file,maxW,png,cb){
+  const img=new Image(), url=URL.createObjectURL(file);
+  img.onload=()=>{
+    const s=Math.min(1,maxW/img.width);
+    const c=document.createElement('canvas');
+    c.width=Math.round(img.width*s); c.height=Math.round(img.height*s);
+    c.getContext('2d').drawImage(img,0,0,c.width,c.height);
+    cb(c.toDataURL(png?'image/png':'image/jpeg',.85));
+    URL.revokeObjectURL(url);
+  };
+  img.src=url;
+}
+
+/* ===== UNDUH site-data.js ===== */
+function unduh(){
+  DATA.wa=$('#wa').value.trim()||DEF.wa;
+  DATA.waTampil=$('#waTampil').value.trim()||DEF.waTampil;
+  DATA.email=$('#email').value.trim()||DEF.email;
+  DATA.ig=$('#ig').value.trim()||DEF.ig;
+  DATA.tt=$('#tt').value.trim()||DEF.tt;
+  DATA.hero={h1a:$('#h1a').value,h1b:$('#h1b').value,sub:$('#sub').value};
+  DATA.videos=[...document.querySelectorAll('#vList .vrow')]
+    .map(r=>({id:r.children[0].value.trim(),nama:r.children[1].value.trim()}))
+    .filter(v=>v.id);
+  DATA.paket=[...document.querySelectorAll('#pkgList .card')].map(d=>({
+    nama:d.querySelector('.p-nama').value, harga:d.querySelector('.p-harga').value,
+    dp:d.querySelector('.p-dp').value, pop:d.querySelector('.p-pop').value==='yes',
+    desc:d.querySelector('.p-desc').value,
+    fitur:d.querySelector('.p-fitur').value.split('\n').map(s=>s.trim()).filter(Boolean)
+  }));
+  const js='window.SITE_DATA = '+JSON.stringify(DATA,null,2)+';';
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([js],{type:'text/javascript'}));
+  a.download='site-data.js'; a.click();
+  alert('File site-data.js terunduh.\n\nLangkah terakhir:\n1. Buka repo GitHub\n2. Add file → Upload files\n3. Pilih site-data.js\n4. Commit changes\n\nWebsite berubah otomatis dalam ±1 menit.');
+}
+</script>
+</body>
+</html>
