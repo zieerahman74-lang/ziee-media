@@ -1,7 +1,24 @@
 {
   "redirects": [
-    { "source": "/unduh", "destination": "https://github.com/zieerahman74-lang/ziee-render-pro-rilis/releases/latest", "permanent": false },
-    { "source": "/unduh/", "destination": "https://github.com/zieerahman74-lang/ziee-render-pro-rilis/releases/latest", "permanent": false },
-    { "source": "/download", "destination": "https://github.com/zieerahman74-lang/ziee-render-pro-rilis/releases/latest", "permanent": false }
+    {
+      "source": "/unduh",
+      "destination": "https://github.com/zieerahman74-lang/ziee-render-pro-rilis/releases/latest/download/ZIEE-RENDER-PRO-Setup.exe",
+      "permanent": false
+    },
+    {
+      "source": "/unduh/",
+      "destination": "https://github.com/zieerahman74-lang/ziee-render-pro-rilis/releases/latest/download/ZIEE-RENDER-PRO-Setup.exe",
+      "permanent": false
+    },
+    {
+      "source": "/download",
+      "destination": "https://github.com/zieerahman74-lang/ziee-render-pro-rilis/releases/latest/download/ZIEE-RENDER-PRO-Setup.exe",
+      "permanent": false
+    },
+    {
+      "source": "/rilis",
+      "destination": "https://github.com/zieerahman74-lang/ziee-render-pro-rilis/releases/latest",
+      "permanent": false
+    }
   ]
 }
