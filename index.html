@@ -233,6 +233,12 @@ body.lbx-lock{overflow:hidden}
 .plat{font-family:var(--fm);font-size:10px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;
   padding:4px 10px;border-radius:999px;background:var(--card);border:1px solid var(--line);color:var(--mut)}
 .plat.grn{background:var(--acc-t);border-color:rgba(23,184,91,.3);color:var(--acc-d)}
+.app-price{display:flex;align-items:baseline;gap:6px;margin:-4px 0 12px;flex-wrap:wrap}
+.app-price b{font-family:var(--fd);font-size:18px;font-weight:800;color:var(--ink)}
+.app-price span{font-size:12px;color:var(--mut)}
+.app-price s{font-size:12px;color:var(--mut);margin-left:4px}
+.app-acts{display:flex;gap:8px;flex-wrap:wrap}
+.app-note{font-size:11.5px!important;line-height:1.55;margin-top:12px!important;color:var(--mut)}
 .apps-note{margin-top:18px;display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;
   background:var(--bg);border:1px solid var(--line);border-radius:16px;
   padding:clamp(14px,2vw,20px) clamp(16px,2.2vw,24px);font-size:var(--fs-small)}
@@ -529,8 +535,13 @@ footer{background:var(--dark);color:rgba(255,255,255,.55);font-size:13.5px;borde
           <div class="app-info">
             <h3>Ziee Render Pro</h3>
             <p>Perangkat lunak produksi video untuk YouTube: subtitle otomatis, teks karaoke, overlay, dan akselerasi GPU.</p>
-            <div class="app-meta"><span class="plat">Windows</span><span class="plat">Produksi Video</span></div>
-            <a class="btn sm ghost" href="#" data-wa="Halo Ziee Media, saya tertarik dengan aplikasi Ziee Render Pro. Mohon informasi aksesnya.">Permintaan Akses</a>
+            <div class="app-meta"><span class="plat">Windows</span><span class="plat">Produksi Video</span><span class="plat grn">Trial gratis 3 hari</span></div>
+            <div class="app-price"><b>Rp 350.000</b><span>/ tahun</span><s>Rp 500.000</s></div>
+            <div class="app-acts">
+              <a class="btn sm" href="https://github.com/zieerahman74-lang/ziee-render-pro-rilis/releases/latest" target="_blank" rel="noopener"><svg class="ic"><use href="#i-dl"/></svg> Unduh gratis</a>
+              <a class="btn sm ghost" href="#" data-wa="Halo Ziee Media, saya ingin membeli lisensi Ziee Render Pro (Rp 350.000 / tahun). Kode perangkat saya: ">Beli lisensi</a>
+            </div>
+            <p class="app-note">Windows 10/11 64-bit. Unduh berkas <b>ZIEE-RENDER-PRO-Setup-….exe</b> di bagian Assets. Jika muncul <i>Windows protected your PC</i>, klik <b>More info</b> lalu <b>Run anyway</b>. 1 lisensi untuk 1 perangkat; pembaruan gratis lewat tombol Update di aplikasi.</p>
           </div>
         </div>
         <div class="app" data-io style="--d:.12s">
