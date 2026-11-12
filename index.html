@@ -295,6 +295,13 @@ body.lbx-lock{overflow:hidden}
 .cta h2{font-family:var(--fd);font-size:clamp(24px,2.8vw,34px);font-weight:700;letter-spacing:-.03em;line-height:1.15;color:#fff;max-width:16ch}
 .cta .s-sub{color:rgba(255,255,255,.62);margin-top:10px;font-size:var(--fs-small);max-width:46ch}
 .cta-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}
+.pay-list{display:grid;gap:8px;width:min(100%,280px)}
+.pay-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 10px 9px 14px;border:1px solid rgba(255,255,255,.14);border-radius:12px;background:rgba(255,255,255,.05);text-align:left}
+.pay-row small{display:block;font-size:10.5px;color:rgba(255,255,255,.6)}
+.pay-row b{display:block;font-family:var(--fm);font-size:13.5px;letter-spacing:.04em;color:#fff;user-select:all}
+.pay-row button{flex:none;min-height:32px;padding:0 12px;border:1px solid rgba(255,255,255,.25);border-radius:9px;background:transparent;color:#fff;font:inherit;font-size:12px;font-weight:600;cursor:pointer;transition:background .2s,border-color .2s}
+.pay-row button:hover{background:var(--acc);border-color:var(--acc)}
+.qr-side p.pay-hint{max-width:280px;text-transform:none;letter-spacing:.02em;font-size:11px;line-height:1.5}
 .qr-side{display:grid;gap:10px;justify-items:center;text-align:center}
 .qr-card{background:#fff;padding:14px;border-radius:16px;box-shadow:0 16px 40px rgba(0,0,0,.4)}
 .qr-card img{width:clamp(110px,10vw,136px);height:clamp(110px,10vw,136px);object-fit:contain}
@@ -687,7 +694,12 @@ footer{background:var(--dark);color:rgba(255,255,255,.55);font-size:13.5px;borde
             <div class="qr-card">
               <img src="qris.png" alt="Kode QRIS pembayaran Ziee Media" data-foto="qris" onerror="this.closest('.qr-side').style.display='none'">
             </div>
-            <p>Scan QRIS untuk uang muka dan pelunasan</p>
+            <p>Scan QRIS (DANA, GoPay, OVO, m-banking)</p>
+            <div class="pay-list">
+              <div class="pay-row"><span><small>GoPay</small><b>081907000018</b></span><button type="button" data-copy="081907000018">Salin</button></div>
+              <div class="pay-row"><span><small>Bank Mandiri · a.n. Ziaturahman</small><b>1610003518144</b></span><button type="button" data-copy="1610003518144">Salin</button></div>
+            </div>
+            <p class="pay-hint">Untuk uang muka, pelunasan, dan lisensi aplikasi. Kirim bukti bayar lewat WhatsApp.</p>
           </div>
         </div>
       </div>
@@ -798,6 +810,11 @@ footer{background:var(--dark);color:rgba(255,255,255,.55);font-size:13.5px;borde
   $$('[data-wa]').forEach(el => el.addEventListener('click', e => {
     e.preventDefault();
     window.open(`https://wa.me/${WA}?text=${encodeURIComponent(el.dataset.wa)}`, '_blank');
+  }));
+
+  $$('[data-copy]').forEach(b => b.addEventListener('click', async () => {
+    try { await navigator.clipboard.writeText(b.dataset.copy); } catch (e) { const t = document.createElement('textarea'); t.value = b.dataset.copy; document.body.appendChild(t); t.select(); document.execCommand('copy'); t.remove(); }
+    const old = b.textContent; b.textContent = 'Tersalin'; setTimeout(() => { b.textContent = old; }, 1600);
   }));
 
   const nav = $('#nav'), tog = $('#navToggle');
