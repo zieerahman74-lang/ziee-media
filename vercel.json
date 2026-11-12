@@ -20,5 +20,15 @@
       "destination": "https://github.com/zieerahman74-lang/ziee-render-pro-rilis/releases/latest",
       "permanent": false
     }
+  ],
+  "rewrites": [
+    {
+      "source": "/lisensi",
+      "destination": "https://zeemedia-lisensi.zieerahman74.workers.dev/"
+    },
+    {
+      "source": "/lisensi/v1/:path*",
+      "destination": "https://zeemedia-lisensi.zieerahman74.workers.dev/v1/:path*"
+    }
   ]
 }
