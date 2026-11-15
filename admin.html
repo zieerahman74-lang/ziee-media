@@ -19,7 +19,7 @@ h1 b{color:var(--acc)}
 .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px;margin-bottom:16px}
 .card h2{font-family:var(--fd);font-size:15px;margin-bottom:14px;color:var(--acc);letter-spacing:.04em}
 label{display:block;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--mut);margin:10px 0 5px}
-input,textarea{width:100%;background:#0A0D0B;border:1px solid var(--line);border-radius:10px;
+input,textarea,select{width:100%;background:#0A0D0B;border:1px solid var(--line);border-radius:10px;
   color:var(--txt);font:inherit;font-size:14px;padding:10px 12px}
 input:focus,textarea:focus{outline:1px solid var(--acc)}
 textarea{min-height:80px;resize:vertical}
@@ -96,9 +96,16 @@ textarea{min-height:80px;resize:vertical}
   </div>
 
   <div class="card">
-    <h2>▣ Video Demo (YouTube — ID dari link, contoh: qi2tzQNKg9Q)</h2>
+    <h2>▣ Video Demo (YouTube — tempel link lengkap atau ID, contoh: qi2tzQNKg9Q)</h2>
     <div id="vList"></div>
     <button class="add" onclick="addVideo('','')">+ Tambah Video</button>
+  </div>
+
+  <div class="card">
+    <h2>▣ Aplikasi (bagian Produk Digital)</h2>
+    <div id="appList"></div>
+    <button class="add" onclick="tampilApp({})">+ Tambah Aplikasi</button>
+    <div class="note">Kolom kosong = tidak ditampilkan. <b>Link unduh</b>: link installer GitHub Releases (…/releases/latest/download/NamaFile.exe), Google Play, atau <code>/unduh</code>. <b>Pesan WA</b>: teks yang otomatis terisi saat pembeli klik tombol beli. Urutan kartu = urutan di sini (pakai ↑ ↓).</div>
   </div>
 
   <div class="card">
@@ -146,6 +153,23 @@ const DEF = {
      desc:'Untuk hasil optimal dengan prioritas pengerjaan.',
      fitur:['Situs web dua sampai tiga halaman, dua episode produksi, atau siaran dengan video sorotan','Tiga kali revisi','Prioritas antrian pengerjaan']}
   ],
+  /* Sama dengan kartu bawaan di index.html */
+  apps:[
+    {nama:'LPTQ NTB', ikon:'gp', desc:"Aplikasi Android resmi untuk mendukung kegiatan Lembaga Latihan Al-Qur'an Nusa Tenggara Barat.",
+     tag:'Terbit di Google Play', badge:'Android', harga:'', satuan:'', coret:'',
+     unduh:'https://play.google.com/store/apps/details?id=com.mylptq.ntb', unduhLabel:'Lihat di Google Play', wa:'', waLabel:'', catatan:''},
+    {nama:'Ziee Render Pro', ikon:'video', desc:'Perangkat lunak produksi video untuk YouTube: subtitle otomatis, teks karaoke, overlay, dan akselerasi GPU.',
+     tag:'Windows, Produksi Video', badge:'Trial gratis 3 hari', harga:'Rp 350.000', satuan:'/ tahun', coret:'Rp 500.000',
+     unduh:'/unduh', unduhLabel:'Unduh gratis',
+     wa:'Halo Ziee Media, saya ingin membeli lisensi Ziee Render Pro (Rp 350.000 / tahun). Kode perangkat saya: ', waLabel:'Beli lisensi',
+     catatan:'Windows 10/11 64-bit. Installer langsung terunduh. Jika muncul "Windows protected your PC", klik More info lalu Run anyway. 1 lisensi untuk 1 perangkat; pembaruan gratis lewat tombol Update di aplikasi.'},
+    {nama:'Ziee Murottal', ikon:'head', desc:'Aplikasi penyuntingan video murottal dengan sinkronisasi teks Arab, terjemahan, serta pengulangan audio otomatis.',
+     tag:'Windows, Penyuntingan Video', badge:'', harga:'', satuan:'', coret:'', unduh:'', unduhLabel:'',
+     wa:'Halo Ziee Media, saya tertarik dengan aplikasi Ziee Murottal. Mohon informasi aksesnya.', waLabel:'Permintaan Akses', catatan:''},
+    {nama:'Ziee Web Download Pro', ikon:'dl', desc:'Pengunduh tautan dan audio dengan dukungan format MP3, WAV, dan FLAC, dilengkapi metadata otomatis.',
+     tag:'Windows, Utilitas', badge:'', harga:'', satuan:'', coret:'', unduh:'', unduhLabel:'',
+     wa:'Halo Ziee Media, saya tertarik dengan aplikasi Ziee Web Download Pro. Mohon informasi aksesnya.', waLabel:'Permintaan Akses', catatan:''}
+  ],
   foto:{}
 };
 
@@ -176,14 +200,51 @@ function isiForm(){
   $('#h1a').value=DATA.hero.h1a; $('#h1b').value=DATA.hero.h1b; $('#sub').value=DATA.hero.sub;
   $('#vList').innerHTML=''; DATA.videos.forEach(v=>addVideo(v.id,v.nama));
   DATA.paket.forEach((p,i)=>tampilPaket(i,p));
+  $('#appList').innerHTML=''; (DATA.apps||[]).forEach(a=>tampilApp(a));
   tampilFoto();
+}
+
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+/* Terima link YouTube penuh (watch?v=, youtu.be/, shorts/, embed/, live/) atau ID 11 karakter */
+const ytId = s => { s=String(s||'').trim(); const m=s.match(/(?:v=|youtu\.be\/|shorts\/|embed\/|live\/)([\w-]{11})/); return m?m[1]:(/^[\w-]{11}$/.test(s)?s:''); };
+
+/* ===== APLIKASI ===== */
+const APP_F = [
+  ['nama','Nama aplikasi'],['ikon','Ikon'],
+  ['desc','Deskripsi singkat','wide'],
+  ['tag','Label (pisah koma, mis: Windows, Produksi Video)'],['badge','Label hijau (mis: Trial gratis 7 hari)'],
+  ['harga','Harga (mis: Rp 350.000)'],['satuan','Satuan (mis: / tahun)'],
+  ['coret','Harga coret (opsional)'],['unduhLabel','Teks tombol unduh'],
+  ['unduh','Link unduh / installer','wide'],
+  ['waLabel','Teks tombol WA'],['wa','Pesan WhatsApp otomatis'],
+  ['catatan','Catatan kecil di bawah tombol (opsional)','wide']
+];
+const IKON = [['video','Video'],['head','Audio / Headphone'],['dl','Unduh'],['gp','Google Play'],['app','Aplikasi umum']];
+function tampilApp(a){
+  const d=document.createElement('div');
+  d.className='card app-card'; d.style.background='#0A0D0B';
+  d.innerHTML=`<div style="display:flex;justify-content:space-between;align-items:center;gap:10px">
+      <b style="font-family:var(--fd)">${esc(a.nama||'Aplikasi baru')}</b>
+      <span><button class="del" title="Naik" style="color:var(--mut)" onclick="geser(this,-1)">↑</button>
+      <button class="del" title="Turun" style="color:var(--mut)" onclick="geser(this,1)">↓</button>
+      <button class="del" title="Hapus" onclick="if(confirm('Hapus kartu aplikasi ini?'))this.closest('.app-card').remove()">✕</button></span>
+    </div>
+    <div class="grid2">${APP_F.map(([k,lab,w])=>`<div${w?' style="grid-column:1/-1"':''}><label>${lab}</label>${
+      k==='ikon' ? `<select class="a-ikon">${IKON.map(([v,t])=>`<option value="${v}"${(a.ikon||'video')===v?' selected':''}>${t}</option>`).join('')}</select>`
+      : (k==='desc'||k==='catatan'||k==='wa') ? `<textarea class="a-${k}" style="min-height:60px">${esc(a[k])}</textarea>`
+      : `<input class="a-${k}" value="${esc(a[k])}">`}</div>`).join('')}</div>`;
+  $('#appList').appendChild(d);
+}
+function geser(btn,arah){
+  const c=btn.closest('.app-card'), t=arah<0?c.previousElementSibling:c.nextElementSibling;
+  if(t) arah<0 ? t.before(c) : t.after(c);
 }
 
 /* ===== VIDEO ===== */
 function addVideo(id,nama){
   const row=document.createElement('div'); row.className='vrow';
-  row.innerHTML=`<input placeholder="ID video" value="${id||''}">
-    <input placeholder="Nama tampilan" value="${nama||''}">
+  row.innerHTML=`<input placeholder="Link YouTube atau ID video" value="${esc(id)}">
+    <input placeholder="Nama tampilan" value="${esc(nama)}">
     <button class="del" onclick="this.parentElement.remove()">✕</button>`;
   $('#vList').appendChild(row);
 }
@@ -261,8 +322,14 @@ function unduh(){
   DATA.tt=$('#tt').value.trim()||DEF.tt;
   DATA.hero={h1a:$('#h1a').value,h1b:$('#h1b').value,sub:$('#sub').value};
   DATA.videos=[...document.querySelectorAll('#vList .vrow')]
-    .map(r=>({id:r.children[0].value.trim(),nama:r.children[1].value.trim()}))
+    .map(r=>({id:ytId(r.children[0].value),nama:r.children[1].value.trim()}))
     .filter(v=>v.id);
+  const salahVid=[...document.querySelectorAll('#vList .vrow')].filter(r=>r.children[0].value.trim() && !ytId(r.children[0].value));
+  if(salahVid.length && !confirm(salahVid.length+' link video tidak dikenali dan akan dilewati. Lanjut unduh?')) return;
+  DATA.apps=[...document.querySelectorAll('#appList .app-card')].map(d=>{
+    const o={}; APP_F.forEach(([k])=>{ const el=d.querySelector('.a-'+k); const v=el?el.value:'';
+      o[k]= k==='wa' ? v.replace(/^\s+/,'') : v.trim(); }); return o;   /* spasi akhir pesan WA dipertahankan */
+  }).filter(a=>a.nama);
   DATA.paket=[...document.querySelectorAll('#pkgList .card')].map(d=>({
     nama:d.querySelector('.p-nama').value, harga:d.querySelector('.p-harga').value,
     dp:d.querySelector('.p-dp').value, pop:d.querySelector('.p-pop').value==='yes',

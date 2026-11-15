@@ -16,7 +16,12 @@
 <meta property="og:description" content="Solusi konten video dan audio terbaik, dengan sistem yang mudah bagi kreator konten digital. Mulai Rp 200.000.">
 <meta property="og:url" content="https://www.zieemediastudio.com/">
 <meta property="og:locale" content="id_ID">
+<meta property="og:image" content="https://www.zieemediastudio.com/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Ziee Media — Website, Aplikasi, Produksi Video & Audio">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.zieemediastudio.com/og-image.jpg">
 <meta name="twitter:title" content="Ziee Media — Studio Digital">
 <meta name="twitter:description" content="Jasa website, aplikasi, produksi video & audio. Mulai Rp 200.000.">
 <meta name="google-site-verification" content="GANTI_KODE_VERIFIKASI">
@@ -563,7 +568,7 @@ body{background:
   <section id="aplikasi" class="sec-alt">
     <div class="wrap">
       <div class="s-head" data-io><p class="s-kicker">Produk Digital</p></div>
-      <div class="apps">
+      <div class="apps" id="appGrid">
         <div class="app" data-io>
           <span class="app-ic gp"><svg class="ic fill"><use href="#b-gp"/></svg></span>
           <div class="app-info">
@@ -837,6 +842,9 @@ body{background:
   const $$ = s => [...document.querySelectorAll(s)];
   const D  = window.SITE_DATA || {};
   const WA = D.wa || '6281907000018';
+  const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]));
+  // Terima ID (qi2tzQNKg9Q) atau link YouTube penuh (watch?v=, youtu.be/, shorts/, embed/).
+  const ytId = s => { s = String(s || '').trim(); const m = s.match(/(?:v=|youtu\.be\/|shorts\/|embed\/|live\/)([\w-]{11})/); return m ? m[1] : (/^[\w-]{11}$/.test(s) ? s : ''); };
 
   function applyData(){
     if(D.hero){
@@ -870,14 +878,43 @@ body{background:
         }
       });
     }
-    if(Array.isArray(D.videos) && D.videos.length){
-      $('#vrow').innerHTML = D.videos.map(v => `
+    const vids = Array.isArray(D.videos) ? D.videos.map(v => ({ ...v, id: ytId(v.id) })).filter(v => v.id) : [];
+    if(vids.length){
+      $('#vrow').innerHTML = vids.map(v => `
         <div class="vcard" data-yt="${v.id}">
-          <img src="https://i.ytimg.com/vi/${v.id}/hqdefault.jpg" alt="Demo ${v.nama}" loading="lazy">
+          <img src="https://i.ytimg.com/vi/${v.id}/hqdefault.jpg" alt="Demo ${esc(v.nama)}" loading="lazy">
           <span class="vp" aria-hidden="true"></span>
-          <span class="vn">${v.nama}</span>
+          <span class="vn">${esc(v.nama)}</span>
         </div>`).join('');
       bindVideos();
+    }
+    // Kartu aplikasi dari panel admin (SITE_DATA.apps). Tanpa data -> kartu bawaan HTML tetap dipakai.
+    if(Array.isArray(D.apps) && D.apps.length){
+      const IKON = { video:'i-video', head:'i-head', dl:'i-dl', gp:'b-gp', app:'t-app' };
+      $('#appGrid').innerHTML = D.apps.filter(a => a && a.nama).map((a,i) => {
+        const ik = IKON[a.ikon] || 'i-video', gp = a.ikon === 'gp';
+        const tags = String(a.tag || '').split(',').map(s => s.trim()).filter(Boolean)
+          .map(t => `<span class="plat">${esc(t)}</span>`).join('')
+          + (a.badge ? `<span class="plat grn">${esc(a.badge)}</span>` : '');
+        // Link halaman luar (Google Play, halaman rilis) dibuka di tab baru; file installer langsung diunduh.
+        const luar = /^https?:/i.test(a.unduh || '') && !/\.(exe|msi|zip|apk)([?#]|$)/i.test(a.unduh);
+        const unduh = a.unduh ? `<a class="btn sm" href="${esc(a.unduh)}" ${luar ? 'target="_blank" rel="noopener"' : 'rel="nofollow"'}>
+              <svg class="ic${gp ? ' fill' : ''}"><use href="#${gp ? 'b-gp' : 'i-dl'}"/></svg> ${esc(a.unduhLabel || 'Unduh gratis')}</a>` : '';
+        const wa = a.wa ? `<a class="btn sm ghost" href="#" data-wa="${esc(a.wa)}">${esc(a.waLabel || 'Beli lisensi')}</a>` : '';
+        return `
+        <div class="app" data-io style="--d:${(i % 4) * .06}s">
+          <span class="app-ic${gp ? ' gp' : ''}"><svg class="ic${gp ? ' fill' : ''}"><use href="#${ik}"/></svg></span>
+          <div class="app-info">
+            <h3>${esc(a.nama)}</h3>
+            ${a.desc ? `<p>${esc(a.desc)}</p>` : ''}
+            ${tags ? `<div class="app-meta">${tags}</div>` : ''}
+            ${a.harga ? `<div class="app-price"><b>${esc(a.harga)}</b>${a.satuan ? `<span>${esc(a.satuan)}</span>` : ''}${a.coret ? `<s>${esc(a.coret)}</s>` : ''}</div>` : ''}
+            ${unduh || wa ? `<div class="app-acts">${unduh}${wa}</div>` : ''}
+            ${a.catatan ? `<p class="app-note">${esc(a.catatan)}</p>` : ''}
+          </div>
+        </div>`;
+      }).join('');
+      observeAll();
     }
     if(Array.isArray(D.paket) && D.paket.length){
       $('#priceGrid').innerHTML = D.paket.map((p,i) => `
@@ -890,18 +927,17 @@ body{background:
           <ul class="p-list">${p.fitur.map(f => `<li><svg class="ic"><use href="#i-check"/></svg>${f}</li>`).join('')}</ul>
           <a class="btn${p.pop ? '' : ' ghost-w'}" href="#" data-wa="Halo Ziee Media, saya ingin memesan paket ${p.nama} (${p.harga}).">Pilih ${p.nama}</a>
         </div>`).join('');
-      $$('[data-wa]').forEach(el => el.addEventListener('click', e => {
-        e.preventDefault();
-        window.open(`https://wa.me/${WA}?text=${encodeURIComponent(el.dataset.wa)}`, '_blank');
-      }));
       observeAll();
     }
   }
 
-  $$('[data-wa]').forEach(el => el.addEventListener('click', e => {
+  // Satu listener untuk semua tombol WA (termasuk kartu yang dirender dari SITE_DATA).
+  document.addEventListener('click', e => {
+    const el = e.target.closest('[data-wa]');
+    if (!el) return;
     e.preventDefault();
     window.open(`https://wa.me/${WA}?text=${encodeURIComponent(el.dataset.wa)}`, '_blank');
-  }));
+  });
 
   $$('[data-copy]').forEach(b => b.addEventListener('click', async () => {
     try { await navigator.clipboard.writeText(b.dataset.copy); } catch (e) { const t = document.createElement('textarea'); t.value = b.dataset.copy; document.body.appendChild(t); t.select(); document.execCommand('copy'); t.remove(); }
