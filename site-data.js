@@ -1,5 +1,5 @@
 window.SITE_DATA = {
-  "wa": "6281907000018",
+  "wa": "081907000018",
   "waTampil": "0819-0700-0018",
   "email": "zieerahman74@gmail.com",
   "ig": "@ziee_media",
@@ -55,6 +55,68 @@ window.SITE_DATA = {
         "Tiga kali revisi",
         "Prioritas antrian pengerjaan"
       ]
+    }
+  ],
+  "apps": [
+    {
+      "nama": "LPTQ NTB",
+      "ikon": "gp",
+      "desc": "Aplikasi Android resmi untuk mendukung kegiatan Lembaga Latihan Al-Qur'an Nusa Tenggara Barat.",
+      "tag": "Terbit di Google Play",
+      "badge": "Android",
+      "harga": "350.000",
+      "satuan": "Life time",
+      "coret": "500.000",
+      "unduhLabel": "Lihat di Google Play",
+      "unduh": "https://play.google.com/store/apps/details?id=com.mylptq.ntb",
+      "waLabel": "Order sekarang dan dapatkan potongan harga",
+      "wa": "SALAM ZIEE MEDIA",
+      "catatan": ""
+    },
+    {
+      "nama": "Ziee Render Pro",
+      "ikon": "video",
+      "desc": "Perangkat lunak produksi video untuk YouTube: subtitle otomatis, teks karaoke, overlay, dan akselerasi GPU.",
+      "tag": "Windows, Produksi Video",
+      "badge": "Trial gratis 7  hari",
+      "harga": "Rp 350.000",
+      "satuan": "Life time",
+      "coret": "Rp 500.000",
+      "unduhLabel": "Unduh gratis",
+      "unduh": "/unduh",
+      "waLabel": "Beli lisensi",
+      "wa": "Halo Ziee Media, saya ingin membeli lisensi Ziee Render Pro (Rp 350.000 ). Kode perangkat saya: ",
+      "catatan": "Windows 10/11 64-bit. Installer langsung terunduh. Jika muncul \"Windows protected your PC\", klik More info lalu Run anyway. 1 lisensi untuk 1 perangkat; pembaruan gratis lewat tombol Update di aplikasi."
+    },
+    {
+      "nama": "Ziee Murottal",
+      "ikon": "dl",
+      "desc": "Aplikasi penyuntingan video murottal dengan sinkronisasi teks Arab, terjemahan, serta pengulangan audio otomatis.",
+      "tag": "Windows, Penyuntingan Video",
+      "badge": "",
+      "harga": "",
+      "satuan": "",
+      "coret": "",
+      "unduhLabel": "",
+      "unduh": "",
+      "waLabel": "Permintaan Akses",
+      "wa": "Halo Ziee Media, saya tertarik dengan aplikasi Ziee Murottal. Mohon informasi aksesnya.",
+      "catatan": ""
+    },
+    {
+      "nama": "Ziee Web Download Pro",
+      "ikon": "dl",
+      "desc": "Pengunduh tautan dan audio dengan dukungan format MP3, WAV, dan FLAC, dilengkapi metadata otomatis.",
+      "tag": "Windows, Utilitas",
+      "badge": "",
+      "harga": "",
+      "satuan": "",
+      "coret": "",
+      "unduhLabel": "",
+      "unduh": "",
+      "waLabel": "Permintaan Akses",
+      "wa": "Halo Ziee Media, saya tertarik dengan aplikasi Ziee Web Download Pro. Mohon informasi aksesnya.",
+      "catatan": ""
     }
   ],
   "foto": {
